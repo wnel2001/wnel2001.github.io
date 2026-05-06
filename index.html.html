@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sungyeon Hong — AI & NLP Researcher</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0d;
+    --surface: #141414;
+    --border: #222;
+    --text: #e8e4dc;
+    --muted: #666;
+    --accent: #c8f080;
+    --accent2: #80c8f0;
+    --accent3: #f0a080;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NOISE TEXTURE */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.4;
+  }
+
+  /* HEADER */
+  header {
+    padding: 80px 60px 60px;
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 40px;
+    align-items: end;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .name {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+
+  .name em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .tagline {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 16px;
+  }
+
+  .header-meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    line-height: 2;
+  }
+
+  .header-meta a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* SECTION */
+  section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 60px;
+    border-bottom: 1px solid var(--border);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ABOUT */
+  .about-text {
+    font-size: 18px;
+    line-height: 1.9;
+    max-width: 680px;
+    color: #bbb;
+  }
+
+  .about-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* SKILLS ROW */
+  .skills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 32px;
+  }
+
+  .skill-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+
+  .skill-tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PROJECTS GRID */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .project-card {
+    background: var(--bg);
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+    cursor: default;
+  }
+
+  .project-card:hover {
+    background: var(--surface);
+  }
+
+  .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--card-accent, var(--accent));
+    transition: height 0.4s ease;
+  }
+
+  .project-card:hover::before {
+    height: 100%;
+  }
+
+  .project-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .project-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+
+  .project-org {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--card-accent, var(--accent));
+    letter-spacing: 1px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .project-desc {
+    font-size: 14px;
+    color: #888;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .project-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 3px 8px;
+    background: var(--border);
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+
+  .project-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    padding: 3px 8px;
+    border: 1px solid var(--muted);
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 0;
+  }
+
+  .stat {
+    background: var(--bg);
+    padding: 32px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 42px;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    display: block;
+  }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  footer .foot-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--muted);
+  }
+
+  footer .foot-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  footer .foot-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+
+  footer .foot-links a:hover {
+    color: var(--accent);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  header { animation-delay: 0s; }
+  section:nth-of-type(1) { animation-delay: 0.1s; }
+  section:nth-of-type(2) { animation-delay: 0.2s; }
+  section:nth-of-type(3) { animation-delay: 0.3s; }
+
+  @media (max-width: 768px) {
+    header, section, footer { padding: 40px 24px; }
+    header { grid-template-columns: 1fr; }
+    .header-meta { text-align: left; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <div class="name">Sungyeon<br><em>Hong</em></div>
+    <div class="tagline">AI Researcher · NLP · Robotics · Privacy ML</div>
+  </div>
+  <div class="header-meta">
+    <div>Naver Labs Europe</div>
+    <div>Grenoble, France</div>
+    <div style="margin-top:8px"><a href="mailto:sungyeon.hong17@gmail.com">sungyeon.hong17@gmail.com</a></div>
+    <div><a href="https://github.com/wnel2001">github.com/wnel2001</a></div>
+  </div>
+</header>
+
+<section>
+  <div class="section-label">About</div>
+  <p class="about-text">
+    Junior Researcher at <strong>Naver Labs Europe</strong> specializing in multilingual NLP and LLM-based systems for service robots. Background spanning <strong>LLM document extraction</strong>, <strong>privacy-preserving federated learning</strong>, and <strong>multimodal NLU</strong> for human-robot interaction. MSc in Data Science & AI <strong>(Summa Cum Laude)</strong>, DSTI Paris.
+  </p>
+  <div class="skills-row">
+    <span class="skill-tag">PyTorch</span>
+    <span class="skill-tag">LLMs</span>
+    <span class="skill-tag">VLM</span>
+    <span class="skill-tag">Federated Learning</span>
+    <span class="skill-tag">Differential Privacy</span>
+    <span class="skill-tag">NLU / SLU</span>
+    <span class="skill-tag">Synthetic Data</span>
+    <span class="skill-tag">Korean · English · French</span>
+    <span class="skill-tag">HuggingFace</span>
+    <span class="skill-tag">Distributed Training</span>
+  </div>
+</section>
+
+<section>
+  <div class="section-label">Projects</div>
+  <div class="projects-grid">
+
+    <div class="project-card" style="--card-accent: #c8f080">
+      <span class="project-badge">Industry</span>
+      <div class="project-num">01</div>
+      <div class="project-title">Multimodal Document Extraction Pipeline</div>
+      <div class="project-org">Elith · Tokyo</div>
+      <div class="project-desc">
+        Designed and deployed an automated pipeline using VLM to extract and interpret structured data from scanned documents.
+
+        Built an end-to-end emergency call response automation system: (1) automated transcription and speaker diarization of call recordings, (2) text normalization and keyword standardization for consistent data processing, (3) prompt-driven classification to identify and categorize medical symptoms from Japanese text achieving 85–97% accuracy, (4) automated response generation and structured output integration for full pipeline deployment.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">OCR</span>
+        <span class="project-tag">LLM</span>
+        <span class="project-tag">VLM</span>
+        <span class="project-tag">Python</span>
+        <span class="project-tag">NLP</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="--card-accent: #80c8f0">
+      <span class="project-badge">Research</span>
+      <div class="project-num">02</div>
+      <div class="project-title">Multilingual NLU for Service Robots</div>
+      <div class="project-org">Naver Labs Europe · Grenoble · LREC 2026</div>
+      <div class="project-desc">
+        Annotated and validated English and Korean utterances, menu items, and synonyms for bilingual NLU tasks in a service robot deployment scenario (ref. StarDrinks, LREC 2026). Designed and built LLM-based synthetic data generation pipelines covering multi-turn and single-turn dialogue scenarios. Applied and compared models ranging from small task-specific models to large-scale LLMs for intent classification and slot filling. Iteratively improved NLU system accuracy through error analysis; system targeting real service robot deployment.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">NLU</span>
+        <span class="project-tag">Synthetic Data</span>
+        <span class="project-tag">Korean/EN</span>
+        <span class="project-tag">LLM</span>
+        <span class="project-tag">Slot Filling</span>
+        <span class="project-tag">HRI</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="--card-accent: #f0a080">
+      <span class="project-badge">Research Assistant</span>
+      <div class="project-num">03</div>
+      <div class="project-title">Privacy-Preserving Federated Learning</div>
+      <div class="project-org">Collaboration · University of Luxembourg, SnT</div>
+      <div class="project-desc">
+        Collaborative research project with University of Luxembourg (SnT) on privacy-preserving federated learning. Designed and implemented distributed training workflows under differential privacy constraints; optimized communication efficiency in large-scale ML systems. Manuscript in preparation.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Federated Learning</span>
+        <span class="project-tag">Differential Privacy</span>
+        <span class="project-tag">Healthcare</span>
+        <span class="project-tag">Distributed ML</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="--card-accent: #d080f0">
+      <span class="project-badge">Academic</span>
+      <div class="project-num">04</div>
+      <div class="project-title">Stroke Prediction ML Pipeline</div>
+      <div class="project-org">DSTI Paris</div>
+      <div class="project-desc">
+        Developed and evaluated machine learning models for stroke risk prediction on clinical data. Performed comprehensive model evaluation and interpretability analysis using feature importance and SHAP values. Achieved highest grade in cohort.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Medical ML</span>
+        <span class="project-tag">Classification</span>
+        <span class="project-tag">Interpretability</span>
+        <span class="project-tag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card" style="--card-accent: #f0d080">
+      <span class="project-badge">Competition</span>
+      <div class="project-num">05</div>
+      <div class="project-title">Agricultural Price Forecasting</div>
+      <div class="project-org">Programmers · Korean Gov. Program</div>
+      <div class="project-desc">
+        Built time-series forecasting models for agricultural commodity price prediction. Applied ensemble methods combining ARIMA, LSTM, XGBoost, and Random Forest. Achieved 3rd place nationally out of all participating teams.
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Time Series</span>
+        <span class="project-tag">LSTM</span>
+        <span class="project-tag">XGBoost</span>
+        <span class="project-tag">Forecasting</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section style="border-bottom: none; padding-bottom: 0">
+  <div class="section-label">At a Glance</div>
+  <div class="stats-row">
+    <div class="stat">
+      <span class="stat-num" style="font-size:28px">HRI</span>
+      <span class="stat-label">Robot Interaction</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" style="font-size:28px">NLU</span>
+      <span class="stat-label">Dialogue Systems</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" style="font-size:28px">LLM / VLM</span>
+      <span class="stat-label"></span>
+    </div>
+    <div class="stat">
+      <span class="stat-num" style="font-size:22px">Federated Learning</span>
+      <span class="stat-label">Privacy ML</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-name">Sungyeon Hong</div>
+  <div class="foot-links">
+    <a href="mailto:sungyeon.hong17@gmail.com">Email</a>
+    <a href="https://github.com/wnel2001">GitHub</a>
+    <a href="https://www.linkedin.com/in/sungyeon-hong">LinkedIn</a>
+  </div>
+</footer>
+
+</body>
+</html>
